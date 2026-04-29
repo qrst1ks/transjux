@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "Transjux",
+  "version": "1.8.0",
+  "description": "Translate selected text or the current Safari page with Microsoft free translation or custom OpenAI-compatible endpoints.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "scripting"
+  ],
+  "action": {
+    "default_title": "Transjux",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "options.html",
+  "commands": {
+    "translate-selection": {
+      "suggested_key": {
+        "default": "Alt+T",
+        "mac": "Alt+T"
+      },
+      "description": "Translate selected text"
+    },
+    "translate-page": {
+      "suggested_key": {
+        "default": "Alt+Shift+T",
+        "mac": "Alt+Shift+T"
+      },
+      "description": "Translate the current page"
+    },
+    "toggle-immersive-mode": {
+      "suggested_key": {
+        "default": "Alt+I",
+        "mac": "Alt+I"
+      },
+      "description": "Toggle immersive mode"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "64": "icons/icon-64.png",
+    "128": "icons/icon-128.png",
+    "256": "icons/icon-256.png",
+    "512": "icons/icon-512.png"
+  }
+}

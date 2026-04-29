@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transjux</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { width: 360px; margin: 0; padding: 14px; font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; overflow-x: hidden; overflow-y: auto; }
+    .header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 0 4px; }
+    .header-right { display: inline-flex; align-items: center; gap: 8px; }
+    h1 { font-size: 15px; margin: 0; }
+    .manage-link { font-size: 12px; white-space: nowrap; }
+    .profile { font-size: 12px; opacity: .68; margin: 0 0 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .service-switch { margin: 0 0 10px; }
+    .service-switch select { width: 100%; min-width: 0; border-radius: 10px; padding: 7px 10px; border: 1px solid color-mix(in srgb, CanvasText 25%, transparent); background: Canvas; color: CanvasText; font: inherit; }
+    textarea { width: 100%; box-sizing: border-box; height: 108px; min-height: 108px; max-height: 108px; resize: none; border-radius: 10px; padding: 10px; border: 1px solid color-mix(in srgb, CanvasText 25%, transparent); background: Canvas; color: CanvasText; font: inherit; overflow-y: auto; }
+    button { border: 0; border-radius: 10px; padding: 9px 12px; font: inherit; cursor: pointer; background: #0a84ff; color: white; }
+    button.secondary { background: color-mix(in srgb, CanvasText 10%, transparent); color: CanvasText; }
+    button.danger { background: color-mix(in srgb, #ff3b30 18%, transparent); color: CanvasText; }
+    .row { display: flex; gap: 8px; margin: 10px 0; }
+    .row button { flex: 1; }
+    .divider { height: 1px; margin: 13px 0 11px; background: color-mix(in srgb, CanvasText 11%, transparent); }
+    #status { font-size: 12px; opacity: 0.75; min-height: 18px; }
+    #result {
+      white-space: pre-wrap;
+      word-break: break-word;
+      border-radius: 10px;
+      padding: 10px;
+      height: 150px;
+      min-height: 150px;
+      max-height: 150px;
+      overflow-y: auto;
+      background: color-mix(in srgb, CanvasText 7%, transparent);
+    }
+    .hint { font-size: 12px; opacity: .7; margin: -2px 0 0; }
+    .immersive-btn {
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: CanvasText;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 10px;
+      cursor: pointer;
+      opacity: .82;
+    }
+    .immersive-btn:hover { background: color-mix(in srgb, CanvasText 8%, transparent); opacity: .96; }
+    .immersive-btn.active { color: #0a84ff; opacity: 1; }
+    .immersive-btn svg { width: 16px; height: 16px; display: block; }
+    .immersive-btn span { font-size: 10px; line-height: 1; }
+    a { color: #0a84ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Transjux</h1>
+    <div class="header-right">
+      <button id="immersiveToggle" class="immersive-btn" type="button" title="Option+I 快捷开关">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3.5 7.8C6.2 5.2 9.1 4 12 4s5.8 1.2 8.5 3.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M5.2 10.9c2.1-2 4.3-2.9 6.8-2.9s4.7.9 6.8 2.9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="12" cy="14.5" r="3.2" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span>沉浸式阅读</span>
+      </button>
+      <a class="manage-link" href="options.html" target="_blank">管理翻译服务</a>
+    </div>
+  </div>
+  <div id="activeProfile" class="profile">正在读取当前服务...</div>
+  <div class="service-switch">
+      <select id="serviceSelect" aria-label="切换翻译服务"></select>
+  </div>
+  <textarea id="source" placeholder="在 Safari 页面中选中文本后打开这里，或直接粘贴要翻译的文本"></textarea>
+  <div class="row">
+    <button id="translate">翻译选区/文本</button>
+    <button id="copy" class="secondary">复制译文</button>
+  </div>
+  <div id="status"></div>
+  <div id="result"></div>
+
+  <div class="divider"></div>
+  <p class="hint">整页翻译会在每个正文段落下方插入轻量中文译文，保留原网页内容。</p>
+  <div class="row">
+    <button id="translatePage">翻译当前页</button>
+    <button id="restorePage" class="danger">还原页面</button>
+  </div>
+  <script src="api.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

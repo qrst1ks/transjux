@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transjux 设置</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --accent: #0a84ff;
+      --accent-2: #64d2ff;
+      --danger: #ff453a;
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --page-bg: #f5f7fb;
+      --card-bg: rgba(255,255,255,.78);
+      --card-border: rgba(0,0,0,.08);
+      --text-main: rgba(0,0,0,.88);
+      --text-sub: rgba(0,0,0,.56);
+      --field-bg: rgba(255,255,255,.86);
+      --shadow: 0 18px 55px rgba(40, 67, 118, .13);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page-bg: #0f1117;
+        --card-bg: rgba(30,32,38,.72);
+        --card-border: rgba(255,255,255,.10);
+        --text-main: rgba(255,255,255,.92);
+        --text-sub: rgba(255,255,255,.58);
+        --field-bg: rgba(255,255,255,.07);
+        --shadow: 0 24px 70px rgba(0,0,0,.34);
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 28px;
+      color: var(--text-main);
+      font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(100,210,255,.30), transparent 34%),
+        radial-gradient(circle at 80% 0%, rgba(10,132,255,.20), transparent 30%),
+        var(--page-bg);
+    }
+    button, input, textarea, select { font: inherit; }
+    .wrap { max-width: 1160px; margin: 0 auto; }
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 0 0 20px;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .brand-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: url("icons/icon-128.png") center / cover no-repeat;
+      box-shadow: 0 10px 30px rgba(10,132,255,.22);
+      flex: 0 0 auto;
+    }
+    h1 { font-size: 28px; line-height: 1.1; margin: 0; letter-spacing: -0.03em; }
+    .subtitle { margin: 6px 0 0; color: var(--text-sub); max-width: 680px; }
+    .hero-pill {
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text-sub);
+      border-radius: 999px;
+      padding: 8px 12px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      white-space: nowrap;
+    }
+    .layout { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 18px; align-items: start; }
+    .panel {
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-xl);
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px) saturate(135%);
+      -webkit-backdrop-filter: blur(22px) saturate(135%);
+      overflow: hidden;
+    }
+    .panel-head {
+      padding: 18px 18px 12px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .panel-title { margin: 0; font-size: 15px; font-weight: 750; letter-spacing: -0.01em; }
+    .panel-desc { margin: 4px 0 0; color: var(--text-sub); font-size: 12px; }
+    .profile-list { display: grid; gap: 10px; padding: 14px; max-height: 520px; overflow: auto; }
+    .profile-item {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 12px;
+      color: var(--text-main);
+      background: rgba(255,255,255,.56);
+      cursor: pointer;
+      transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
+    }
+    @media (prefers-color-scheme: dark) { .profile-item { background: rgba(255,255,255,.055); } }
+    .profile-item:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--accent) 36%, var(--card-border)); }
+    .profile-item.active {
+      border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+      background: color-mix(in srgb, var(--accent) 12%, var(--card-bg));
+      box-shadow: 0 10px 25px rgba(10,132,255,.12);
+    }
+    .profile-title { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: 700; }
+    .profile-meta { margin-top: 6px; font-size: 12px; color: var(--text-sub); word-break: break-all; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 2px 7px;
+      font-size: 11px;
+      line-height: 1.45;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 13%, transparent);
+      white-space: nowrap;
+    }
+    .sidebar-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 14px 14px; }
+    .hint { margin: 0; color: var(--text-sub); font-size: 12px; }
+    .sidebar-hint { padding: 0 18px 18px; }
+    .form { padding: 18px; }
+    .section {
+      padding: 16px;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,.42);
+      margin-bottom: 14px;
+    }
+    @media (prefers-color-scheme: dark) { .section { background: rgba(255,255,255,.045); } }
+    .section-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .section-title h2 { margin: 0; font-size: 14px; letter-spacing: -0.01em; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .two-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label { display: block; font-weight: 680; margin: 0 0 6px; }
+    .field { margin-bottom: 12px; }
+    input, textarea, select {
+      width: 100%;
+      border-radius: 13px;
+      padding: 11px 12px;
+      border: 1px solid color-mix(in srgb, var(--text-main) 14%, transparent);
+      background: var(--field-bg);
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 130ms ease, box-shadow 130ms ease, background 130ms ease;
+    }
+    input:focus, textarea:focus {
+      border-color: color-mix(in srgb, var(--accent) 72%, transparent);
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent);
+    }
+    textarea { min-height: 190px; resize: vertical; }
+    code {
+      border-radius: 6px;
+      padding: 2px 5px;
+      color: var(--text-main);
+      background: color-mix(in srgb, var(--text-main) 8%, transparent);
+    }
+    .range-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 72px auto;
+      gap: 12px;
+      align-items: center;
+    }
+    input[type="range"] { padding: 0; accent-color: var(--accent); background: transparent; }
+    .scale-value { font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; color: var(--accent); }
+    .buttons { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 13px;
+      cursor: pointer;
+      font-weight: 660;
+      color: white;
+      background: linear-gradient(180deg, #2d9cff, #0a84ff);
+      box-shadow: 0 7px 18px rgba(10,132,255,.20);
+      transition: transform 130ms ease, opacity 130ms ease, box-shadow 130ms ease;
+    }
+    button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(10,132,255,.24); }
+    button:active:not(:disabled) { transform: translateY(0); }
+    button.secondary {
+      color: var(--text-main);
+      background: color-mix(in srgb, var(--text-main) 8%, transparent);
+      box-shadow: none;
+    }
+    button.danger {
+      color: var(--danger);
+      background: color-mix(in srgb, var(--danger) 13%, transparent);
+      box-shadow: none;
+    }
+    button:disabled { cursor: default; opacity: .45; transform: none; box-shadow: none; }
+    #status { min-height: 22px; color: var(--text-sub); margin-top: 12px; }
+    @media (max-width: 880px) {
+      body { padding: 18px; }
+      .hero { align-items: flex-start; flex-direction: column; }
+      .layout { grid-template-columns: 1fr; }
+      .grid, .two-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true"></div>
+        <div>
+          <h1>Transjux</h1>
+          
+        </div>
+      </div>
+      <div class="hero-pill">Safari 轻量翻译扩展</div>
+    </header>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="panel-head">
+          <p class="panel-title">API 配置</p>
+          <p class="panel-desc">选择一套配置进行编辑或设为当前。</p>
+        </div>
+        <div id="profileList" class="profile-list"></div>
+        <div class="sidebar-actions">
+          <button id="newProfile" class="secondary" type="button">新增</button>
+          <button id="duplicateProfile" class="secondary" type="button">复制当前</button>
+        </div>
+        
+      </aside>
+
+      <main class="panel">
+        <div class="panel-head">
+          <p class="panel-title">当前配置详情</p>
+          <p class="panel-desc">保存后可设为当前，用于划词气泡和整页翻译。</p>
+        </div>
+
+        <div class="form">
+          <section class="section">
+            <div class="section-title"><h2>基础信息</h2></div>
+            <input id="provider" type="hidden">
+            <div class="field">
+              <label for="name">配置名称</label>
+              <input id="name" placeholder="例如：OpenAI / DeepSeek / 本地 MLX">
+            </div>
+          </section>
+
+          <section id="microsoftSection" class="section">
+            <div class="section-title"><h2>微软免费翻译</h2></div>
+            <div class="field">
+              <label for="targetLanguage">目标语言</label>
+              <select id="targetLanguage">
+                <option value="zh-Hans">简体中文 zh-Hans</option>
+                <option value="zh-Hant">繁体中文 zh-Hant</option>
+                <option value="en">英文 en</option>
+                <option value="ja">日文 ja</option>
+                <option value="ko">韩文 ko</option>
+                <option value="fr">法文 fr</option>
+                <option value="de">德文 de</option>
+                <option value="es">西班牙文 es</option>
+              </select>
+            </div>
+          </section>
+
+          <section id="openaiSection" class="section">
+            <div class="section-title"><h2>OpenAI-compatible API</h2></div>
+            <div class="two-grid">
+              <div class="field">
+                <label for="baseUrl">Base URL</label>
+                <input id="baseUrl" placeholder="">
+                <p class="hint">会自动拼接 <code>/chat/completions</code>；直接填完整地址也可以。</p>
+              </div>
+              <div class="field">
+                <label for="apiKey">API Key</label>
+                <input id="apiKey" placeholder="" autocomplete="off">
+              </div>
+            </div>
+            <div class="field">
+              <label for="model">Model</label>
+              <input id="model" placeholder="">
+            </div>
+          </section>
+
+          <section id="generationSection" class="section">
+            <div class="section-title"><h2>生成参数</h2></div>
+            <div class="grid">
+              <div class="field">
+                <label for="temperature">Temperature</label>
+                <input id="temperature" type="number" step="0.1" min="0" max="2">
+              </div>
+              <div class="field">
+                <label for="topP">Top P</label>
+                <input id="topP" type="number" step="0.1" min="0" max="1">
+              </div>
+              <div class="field">
+                <label for="maxTokens">Max Tokens</label>
+                <input id="maxTokens" type="number" step="1" min="1">
+              </div>
+            </div>
+          </section>
+
+          <section id="promptSection" class="section">
+            <div class="section-title"><h2>Prompt</h2></div>
+            <label for="promptTemplate">模板，用 <code>{{text}}</code> 表示待翻译文本</label>
+            <textarea id="promptTemplate" placeholder=""></textarea>
+          </section>
+
+          <div class="buttons">
+            <button id="saveProfile" type="button">保存当前配置</button>
+            <button id="setActive" class="secondary" type="button">设为当前</button>
+            <button id="deleteProfile" class="danger" type="button">删除当前配置</button>
+            
+          </div>
+          <div id="status"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="api.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
