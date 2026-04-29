@@ -48,23 +48,6 @@ web-extension/
   api.js
 ```
 
-## 本地开发
-
-### 1. 载入扩展
-
-Safari 开发调试可通过临时加载 `web-extension` 目录完成。
-
-### 2. 可选：转换为 Safari Xcode 项目
-
-```bash
-./scripts/convert-safari.sh
-```
-
-### 3. 开发时建议
-
-- 每次修改后重新加载扩展
-- 重点回归：划词翻译、整页翻译、沉浸开关、服务切换
-
 ## 配置说明
 
 ### OpenAI-compatible
