@@ -49,7 +49,7 @@ web-extension/
 ```
 
 ## 配置说明
-
+### 使用前需要在Safari开启‘允许未签名的扩展’
 ### OpenAI-compatible
 
 需要填写：
