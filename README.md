@@ -1,4 +1,5 @@
 # Transjux for Safari
+> 使用前需要在 Safari 中开启「允许未签名的扩展」。
 
 Transjux 是一个 Safari Web Extension，用于网页文本翻译：
 
@@ -6,6 +7,7 @@ Transjux 是一个 Safari Web Extension，用于网页文本翻译：
 - 整页翻译（保留原文，在正文块下插入译文）
 - 沉浸式阅读（可在弹窗中开启）
 - 多服务配置（微软免费翻译 / OpenAI-compatible 接口）
+
 
 ## 主要功能
 
@@ -49,7 +51,6 @@ web-extension/
 ```
 
 ## 配置说明
-### 使用前需要在Safari开启‘允许未签名的扩展’
 ### OpenAI-compatible
 
 需要填写：
